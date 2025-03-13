@@ -45,7 +45,7 @@ def load_files_and_extract_info():
             return state_schema, update_messages
 
         else:
-            st.error("Failed to extract text.")
+            st.error(f"Failed to extract text. Status code: {response.status_code}")
 
 
 def fetching_referenced_patents(state_schema, update_messages):
