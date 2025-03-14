@@ -114,9 +114,6 @@ def planning_strategy(state_schema, update_messages):
 
     if response.status_code == 200:
 
-        # state_schema = response.json()
-        # strategy_text.text_area("Strategy", state_schema['strategy'], height=300)
-
         def stream():
             strategy_response = ""
             for chunk in response.iter_content(chunk_size=1024):
@@ -133,8 +130,6 @@ def planning_strategy(state_schema, update_messages):
 
         return stream, state_schema, update_messages
 
-        # return state_schema, update_messages
-
     else:
         st.error("Failed to plan a strategy.")
 
@@ -149,9 +144,6 @@ def execute_strategy(state_schema, update_messages):
         response = requests.post(execute_strategy_url, json=state_schema, stream=True)
 
     if response.status_code == 200:
-
-        # state_schema = response.json()
-        # response_text.text_area("Response to OA draft", state_schema['response'], height=300)
 
         def stream():
             execute_response = ""
@@ -168,8 +160,6 @@ def execute_strategy(state_schema, update_messages):
         live_updates.text_area("Live Updates", update_messages, height=300)
 
         return stream, state_schema, update_messages
-
-        # return state_schema, update_messages
 
     else:
         st.error("Failed to execute the strategy.")
