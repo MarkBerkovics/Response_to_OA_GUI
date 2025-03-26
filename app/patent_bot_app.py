@@ -10,7 +10,7 @@ st.markdown("")
 # Uploading the relevant files
 patent_application_file = st.file_uploader("Upload the patent application")
 office_action_file = st.file_uploader("Upload the office action")
-prior_art_file = st.file_uploader("Upload the prior art (if needed)")
+prior_art_file = st.file_uploader("Upload additional files (if needed)", accept_multiple_files=True)
 
 # Base url and all the endpoints
 base_url = "https://response-to-oa-image-2dkcwif5ra-ew.a.run.app"
@@ -29,9 +29,11 @@ def load_files_and_extract_info():
     if patent_application_file and office_action_file:
         files = {
             "patent_application_file": (patent_application_file.name, patent_application_file.getvalue(),  patent_application_file.type),
-            "office_action_file": (office_action_file.name, office_action_file.getvalue(), office_action_file.type),
-            "prior_art_file": (prior_art_file.name, prior_art_file.getvalue(), prior_art_file.type) if prior_art_file else None
+            "office_action_file": (office_action_file.name, office_action_file.getvalue(), office_action_file.type)
         }
+        if prior_art_file:
+            for i, file in enumerate(prior_art_file):
+                files[f"prior_art_file_{i+1}"] = (file.name, file.getvalue(), file.type)
 
         with st.spinner("Extracting text from files..."):
 
