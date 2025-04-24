@@ -3,12 +3,13 @@ import requests
 import time
 
 st.title("🤖 Patent Bot 📑")
-st.markdown("#### Hi Ariel, I'm here to assist you with responding to the Office Action. \
-    Please upload the patent application and the office action, and then click the button to get started.")
+st.markdown("#### Hi Ariel, I'm here to assist you with responding to claim rejections. \
+    Upload the desired documents and click the button to get started.")
 st.markdown("")
 
 # Uploading the relevant files
 patent_application_file = st.file_uploader("Upload the patent application")
+recent_claims_file = st.file_uploader("Upload the most recent claims (optional)")
 office_action_file = st.file_uploader("Upload the office action")
 prior_art_file = st.file_uploader("Upload additional files (if needed)", accept_multiple_files=True)
 
@@ -31,6 +32,10 @@ def load_files_and_extract_info():
             "patent_application_file": (patent_application_file.name, patent_application_file.getvalue(),  patent_application_file.type),
             "office_action_file": (office_action_file.name, office_action_file.getvalue(), office_action_file.type)
         }
+
+        if recent_claims_file:
+            files["recent_claims_file"] = (recent_claims_file.name, recent_claims_file.getvalue(), recent_claims_file.type)
+
         if prior_art_file:
             for i, file in enumerate(prior_art_file):
                 files[f"prior_art_file_{i+1}"] = (file.name, file.getvalue(), file.type)
