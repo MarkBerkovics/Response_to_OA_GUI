@@ -161,7 +161,7 @@ def select_response(state_schema):
 
     choice = st.radio(
         claim_number,
-        ['amend', 'dispute', 'combine', 'remove'],
+        ['amend', 'dispute', 'remove'],
         key=f"radio {claim_number}",
         index=None
     )
